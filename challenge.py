@@ -3,8 +3,10 @@ def make_division_by(n):
        of an x number by n 
     """
     # You have to code here!
-    pass
-
+    def nested_f(number):
+        assert type(number) == int
+        return number / n
+    return nested_f
 
 def run():
     division_by_3 = make_division_by(3)
@@ -16,13 +18,26 @@ def run():
     division_by_18 = make_division_by(18)
     print(division_by_18(54))  # The expected output is 3
 
-
 if __name__ == '__main__':
     import unittest
 
     class ClosureSuite(unittest.TestCase):
-        def test_closure_make_division_by(self):
-            # Make the closure test here
-            pass
+
+        def setUp(self):
+            self.testing_numbers = {
+                6: (3,18),
+                20: (5,100),
+                3: (18,54),
+                }
+
+        def test_make_division_by(self):
+            for key, value in self.testing_numbers.items():
+                division_by_n = make_division_by(value[0])
+                self.assertEqual(key, division_by_n(value[1]),
+                'Please, check the closure "make_division_by(n)"')
+
+        def tearDown(self):
+            del(self.testing_numbers)
 
     run()
+    unittest.main()
